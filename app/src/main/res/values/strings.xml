@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RentCal</string>
+    <string name="facility_amount">Facility Amount / Capital</string>
+    <string name="repayment_period">Repayment Period</string>
+    <string name="years">Years</string>
+    <string name="months">Months</string>
+    <string name="annual_interest_rate">Annual Interest Rate (%)</string>
+    <string name="calculate">Calculate</string>
+    <string name="monthly_installment">Monthly Installment</string>
+    <string name="enter_facility_amount">Enter Facility Amount</string>
+    <string name="enter_interest_rate">Enter Annual Interest Rate</string>
+    <string name="enter_monthly_installment">Enter Monthly Installment</string>
+    <string name="invalid_input">Please enter valid values</string>
+    <string name="calculated_repayment_period">Repayment Period</string>
+    <string name="or">OR</string>
+    <string name="enter_repayment_period_or_installment">Enter either Repayment Period or Monthly Installment</string>
+</resources>
+
