@@ -15,11 +15,35 @@ st.set_page_config(
 # Load configuration - support both local and Streamlit Cloud
 if 'credentials' in st.secrets:
     # Running on Streamlit Cloud - use secrets
+    # Convert secrets to regular dict (secrets are read-only and cannot be modified)
+    # The authenticator library needs to modify the credentials dict
     config = {
-        'credentials': st.secrets['credentials'],
-        'cookie': st.secrets['cookie'],
-        'preauthorized': st.secrets.get('preauthorized', {})
+        'credentials': {
+            'usernames': {}
+        },
+        'cookie': {
+            'name': st.secrets['cookie']['name'],
+            'key': st.secrets['cookie']['key'],
+            'expiry_days': st.secrets['cookie']['expiry_days']
+        },
+        'preauthorized': {}
     }
+    
+    # Copy credentials from secrets to mutable dict
+    for username, user_data in st.secrets['credentials']['usernames'].items():
+        config['credentials']['usernames'][username] = {
+            'email': user_data['email'],
+            'failed_login_attempts': user_data.get('failed_login_attempts', 0),
+            'logged_in': user_data.get('logged_in', False),
+            'name': user_data['name'],
+            'password': user_data['password']
+        }
+    
+    # Copy preauthorized emails if they exist
+    if 'preauthorized' in st.secrets and 'emails' in st.secrets['preauthorized']:
+        config['preauthorized'] = {
+            'emails': list(st.secrets['preauthorized']['emails'])
+        }
 else:
     # Running locally - use config.yaml
     try:
