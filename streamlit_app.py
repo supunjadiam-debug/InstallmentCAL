@@ -15,6 +15,11 @@ st.set_page_config(
 # Load configuration - support both local and Streamlit Cloud
 if 'credentials' in st.secrets:
     # Running on Streamlit Cloud - use secrets
+    # Validate required secrets exist
+    if 'cookie' not in st.secrets:
+        st.error("Missing 'cookie' configuration in Streamlit secrets. Please add cookie settings.")
+        st.stop()
+    
     # Convert secrets to regular dict (secrets are read-only and cannot be modified)
     # The authenticator library needs to modify the credentials dict
     config = {
@@ -22,21 +27,25 @@ if 'credentials' in st.secrets:
             'usernames': {}
         },
         'cookie': {
-            'name': st.secrets['cookie']['name'],
-            'key': st.secrets['cookie']['key'],
-            'expiry_days': st.secrets['cookie']['expiry_days']
+            'name': st.secrets['cookie'].get('name', 'rentcal_cookie'),
+            'key': st.secrets['cookie'].get('key', ''),
+            'expiry_days': st.secrets['cookie'].get('expiry_days', 30)
         },
         'preauthorized': {}
     }
     
     # Copy credentials from secrets to mutable dict
+    if 'usernames' not in st.secrets['credentials']:
+        st.error("Missing 'usernames' in credentials. Please check your Streamlit secrets configuration.")
+        st.stop()
+    
     for username, user_data in st.secrets['credentials']['usernames'].items():
         config['credentials']['usernames'][username] = {
-            'email': user_data['email'],
+            'email': user_data.get('email', ''),
             'failed_login_attempts': user_data.get('failed_login_attempts', 0),
             'logged_in': user_data.get('logged_in', False),
-            'name': user_data['name'],
-            'password': user_data['password']
+            'name': user_data.get('name', username),
+            'password': user_data.get('password', '')
         }
     
     # Copy preauthorized emails if they exist
@@ -44,6 +53,11 @@ if 'credentials' in st.secrets:
         config['preauthorized'] = {
             'emails': list(st.secrets['preauthorized']['emails'])
         }
+    
+    # Validate required cookie key
+    if not config['cookie']['key']:
+        st.error("Missing 'cookie.key' in Streamlit secrets. Please add a cookie key for security.")
+        st.stop()
 else:
     # Running locally - use config.yaml
     try:
@@ -54,12 +68,12 @@ else:
         st.stop()
 
 # Initialize authenticator
+# Note: preauthorized parameter has been removed in newer versions
 authenticator = stauth.Authenticate(
     config['credentials'],
     config['cookie']['name'],
     config['cookie']['key'],
-    config['cookie']['expiry_days'],
-    config['preauthorized']
+    config['cookie']['expiry_days']
 )
 
 # Authentication
@@ -370,4 +384,3 @@ st.markdown(
     "</div>",
     unsafe_allow_html=True
 )
-
