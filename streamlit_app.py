@@ -108,29 +108,39 @@ elif authentication_status:
         st.write(f'Welcome *{name}*')
         authenticator.logout(location='sidebar')
 
-# Custom CSS with glassmorphism effect
+# Custom CSS with enhanced glassmorphism effect and gray shadows
 st.markdown("""
     <style>
-        /* Global glassmorphism background */
+        /* Global light gray background */
         .main {
-            background: linear-gradient(135deg, #e3e3e3 0%, #f5f5f5 100%);
+            background: #d3d3d3 !important;
         }
         
-        /* Main container with glassmorphism */
+        /* Remove default Streamlit styling */
+        .stApp {
+            background: #d3d3d3;
+        }
+        
+        /* Main container with enhanced glassmorphism */
         .block-container {
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
-            padding: 2rem;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.15),
+                        0 4px 12px 0 rgba(0, 0, 0, 0.1),
+                        inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
+            padding: 2.5rem;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
         }
         
         /* Mobile-first responsive design */
         @media (max-width: 768px) {
             .main .block-container {
-                padding: 1rem;
+                padding: 1.5rem;
+                border-radius: 20px;
             }
             h1 {
                 font-size: 1.75rem !important;
@@ -140,148 +150,224 @@ st.markdown("""
             }
         }
         
-        /* Center align title */
+        /* Center align title with better visibility */
         h1 {
             text-align: center;
-            color: #4a4a4a;
-            margin-bottom: 2rem;
-            font-weight: 300;
-            letter-spacing: -0.5px;
-        }
-        
-        /* Subheader styling with glassmorphism */
-        h2, h3 {
-            color: #5a5a5a;
+            color: #2a2a2a;
+            margin-bottom: 2.5rem;
             font-weight: 400;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
         
-        /* Result box styling with glassmorphism */
+        /* Subheader styling with better contrast */
+        h2, h3 {
+            color: #333333;
+            font-weight: 500;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Section containers with glassmorphism */
+        .element-container {
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Result box styling with enhanced glassmorphism */
         .result-box {
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            border-radius: 16px;
-            padding: 2rem;
-            margin-top: 1.5rem;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-top: 2rem;
             text-align: center;
-            box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.08);
+            box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.12),
+                        0 4px 8px 0 rgba(0, 0, 0, 0.08),
+                        inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
         }
         
         .result-label {
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: #6a6a6a;
-            margin-bottom: 0.75rem;
-            letter-spacing: 0.5px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #4a4a4a;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
             text-transform: uppercase;
-            font-size: 0.85rem;
         }
         
         .result-value {
-            font-size: 2.5rem;
-            font-weight: 300;
-            color: #4a4a4a;
-            letter-spacing: -1px;
+            font-size: 2.8rem;
+            font-weight: 400;
+            color: #1a1a1a;
+            letter-spacing: -1.5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
         }
         
-        /* Button styling with glassmorphism */
+        /* Button styling with enhanced glassmorphism */
         .stButton > button {
             width: 100%;
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            color: #4a4a4a;
-            font-size: 1rem;
-            padding: 0.875rem;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.7);
-            font-weight: 500;
-            box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            color: #2a2a2a;
+            font-size: 1.05rem;
+            padding: 1rem;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+            box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.12),
+                        0 2px 6px 0 rgba(0, 0, 0, 0.08),
+                        inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
             transition: all 0.3s ease;
         }
         
         .stButton > button:hover {
-            background: rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.9);
-            box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.12);
-            transform: translateY(-1px);
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 1);
+            box-shadow: 0 8px 28px 0 rgba(0, 0, 0, 0.18),
+                        0 4px 12px 0 rgba(0, 0, 0, 0.12),
+                        inset 0 1px 0 0 rgba(255, 255, 255, 1);
+            transform: translateY(-2px);
         }
         
-        /* Input field styling with glassmorphism */
+        /* Input field styling with enhanced glassmorphism */
         .stNumberInput > div > div > input,
         .stTextInput > div > div > input,
         .stSelectbox > div > div > select {
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            border-radius: 10px;
-            color: #4a4a4a;
+            background: rgba(255, 255, 255, 0.75) !important;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.8) !important;
+            border-radius: 12px !important;
+            color: #2a2a2a !important;
+            box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08),
+                        inset 0 1px 0 0 rgba(255, 255, 255, 0.8);
+            padding: 0.75rem 1rem !important;
         }
         
         .stNumberInput > div > div > input:focus,
-        .stTextInput > div > div > input:focus {
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+        .stTextInput > div > div > input:focus,
+        .stSelectbox > div > div > select:focus {
+            border: 1px solid rgba(255, 255, 255, 1) !important;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4),
+                        0 6px 16px 0 rgba(0, 0, 0, 0.12),
+                        inset 0 1px 0 0 rgba(255, 255, 255, 1);
+            outline: none;
         }
         
         .stNumberInput label,
         .stTextInput label,
         .stSelectbox label {
-            font-weight: 500;
-            color: #5a5a5a;
+            font-weight: 600;
+            color: #333333;
+            margin-bottom: 0.5rem;
         }
         
-        /* Radio button styling */
-        .stRadio > div {
-            background: rgba(255, 255, 255, 0.4);
+        /* Input wrapper containers */
+        .stNumberInput > div,
+        .stTextInput > div,
+        .stSelectbox > div {
+            background: rgba(255, 255, 255, 0.5);
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            border-radius: 12px;
-            padding: 1rem;
+            border-radius: 14px;
+            padding: 0.5rem;
+            box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.06);
+        }
+        
+        /* Radio button styling with glassmorphism */
+        .stRadio > div {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 16px;
+            padding: 1.25rem;
+            box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.1),
+                        inset 0 1px 0 0 rgba(255, 255, 255, 0.8);
         }
         
         .stRadio label {
-            color: #5a5a5a;
+            color: #333333;
+            font-weight: 500;
         }
         
-        /* Expander styling */
+        /* Expander styling with glassmorphism */
         .streamlit-expanderHeader {
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            border-radius: 10px;
-            color: #5a5a5a;
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            color: #333333;
+            font-weight: 500;
+            box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
         }
         
         .streamlit-expanderContent {
-            background: rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            border-radius: 10px;
-            margin-top: 0.5rem;
-            padding: 1rem;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 12px;
+            margin-top: 0.75rem;
+            padding: 1.25rem;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.06);
+        }
+        
+        .streamlit-expanderContent p,
+        .streamlit-expanderContent div {
+            color: #2a2a2a;
         }
         
         /* Divider styling */
         .divider {
             text-align: center;
-            margin: 2rem 0;
+            margin: 2.5rem 0;
             font-weight: 300;
-            color: #9a9a9a;
-            opacity: 0.5;
+            color: #8a8a8a;
+            opacity: 0.6;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
         }
         
-        /* Error message styling */
+        /* Error/Alert message styling */
         .stAlert {
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            border-radius: 14px;
+            box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.12),
+                        0 2px 6px 0 rgba(0, 0, 0, 0.08);
+        }
+        
+        /* Column containers */
+        [data-testid="column"] {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 16px;
+            padding: 1.5rem;
             border: 1px solid rgba(255, 255, 255, 0.7);
-            border-radius: 12px;
+            box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.1),
+                        inset 0 1px 0 0 rgba(255, 255, 255, 0.8);
+        }
+        
+        /* Improve text visibility */
+        p, div, span {
+            color: #2a2a2a;
+        }
+        
+        /* Markdown text styling */
+        .stMarkdown p,
+        .stMarkdown div {
+            color: #2a2a2a;
+        }
+        
+        /* Help text styling */
+        .stTooltipIcon {
+            color: #5a5a5a;
         }
     </style>
 """, unsafe_allow_html=True)
