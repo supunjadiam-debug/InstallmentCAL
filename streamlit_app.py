@@ -7,7 +7,7 @@ import streamlit_authenticator as stauth
 # Page configuration for mobile responsiveness
 st.set_page_config(
     page_title="RentCal - Vehicle Financing Calculator",
-    page_icon="🚗",
+    page_icon="",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
@@ -108,9 +108,25 @@ elif authentication_status:
         st.write(f'Welcome *{name}*')
         authenticator.logout(location='sidebar')
 
-# Custom CSS for mobile responsiveness
+# Custom CSS with glassmorphism effect
 st.markdown("""
     <style>
+        /* Global glassmorphism background */
+        .main {
+            background: linear-gradient(135deg, #e3e3e3 0%, #f5f5f5 100%);
+        }
+        
+        /* Main container with glassmorphism */
+        .block-container {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+        
         /* Mobile-first responsive design */
         @media (max-width: 768px) {
             .main .block-container {
@@ -127,60 +143,145 @@ st.markdown("""
         /* Center align title */
         h1 {
             text-align: center;
-            color: #6200EE;
+            color: #4a4a4a;
             margin-bottom: 2rem;
+            font-weight: 300;
+            letter-spacing: -0.5px;
         }
         
-        /* Result box styling */
+        /* Subheader styling with glassmorphism */
+        h2, h3 {
+            color: #5a5a5a;
+            font-weight: 400;
+        }
+        
+        /* Result box styling with glassmorphism */
         .result-box {
-            background-color: #F5F5F5;
-            border: 2px solid #BB86FC;
-            border-radius: 8px;
-            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 16px;
+            padding: 2rem;
             margin-top: 1.5rem;
             text-align: center;
+            box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.08);
         }
         
         .result-label {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #3700B3;
-            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #6a6a6a;
+            margin-bottom: 0.75rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
         }
         
         .result-value {
             font-size: 2.5rem;
-            font-weight: bold;
-            color: #3700B3;
+            font-weight: 300;
+            color: #4a4a4a;
+            letter-spacing: -1px;
         }
         
-        /* Button styling */
+        /* Button styling with glassmorphism */
         .stButton > button {
             width: 100%;
-            background-color: #6200EE;
-            color: white;
-            font-size: 1.1rem;
-            padding: 0.75rem;
-            border-radius: 8px;
-            border: none;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: #4a4a4a;
+            font-size: 1rem;
+            padding: 0.875rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+            box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
         }
         
         .stButton > button:hover {
-            background-color: #3700B3;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.12);
+            transform: translateY(-1px);
         }
         
-        /* Input field styling */
-        .stNumberInput label {
-            font-weight: 600;
-            color: #6200EE;
+        /* Input field styling with glassmorphism */
+        .stNumberInput > div > div > input,
+        .stTextInput > div > div > input,
+        .stSelectbox > div > div > select {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 10px;
+            color: #4a4a4a;
+        }
+        
+        .stNumberInput > div > div > input:focus,
+        .stTextInput > div > div > input:focus {
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+        }
+        
+        .stNumberInput label,
+        .stTextInput label,
+        .stSelectbox label {
+            font-weight: 500;
+            color: #5a5a5a;
+        }
+        
+        /* Radio button styling */
+        .stRadio > div {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 12px;
+            padding: 1rem;
+        }
+        
+        .stRadio label {
+            color: #5a5a5a;
+        }
+        
+        /* Expander styling */
+        .streamlit-expanderHeader {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+            color: #5a5a5a;
+        }
+        
+        .streamlit-expanderContent {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-radius: 10px;
+            margin-top: 0.5rem;
+            padding: 1rem;
         }
         
         /* Divider styling */
         .divider {
             text-align: center;
-            margin: 1.5rem 0;
-            font-weight: bold;
-            color: #6200EE;
+            margin: 2rem 0;
+            font-weight: 300;
+            color: #9a9a9a;
+            opacity: 0.5;
+        }
+        
+        /* Error message styling */
+        .stAlert {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 12px;
         }
     </style>
 """, unsafe_allow_html=True)
@@ -246,13 +347,13 @@ def format_repayment_period(total_months: int) -> str:
         return f"{months} Months"
 
 # Main App
-st.title("🚗 RentCal - Vehicle Financing Calculator")
+st.title("RentCal - Vehicle Financing Calculator")
 
 # Create two columns for better layout on desktop, stack on mobile
 col1, col2 = st.columns([1, 1])
 
 with col1:
-    st.subheader("📊 Input Parameters")
+    st.subheader("Input Parameters")
     
     # Facility Amount
     facility_amount = st.number_input(
@@ -275,7 +376,7 @@ with col1:
     )
 
 with col2:
-    st.subheader("🔢 Calculation Mode")
+    st.subheader("Calculation Mode")
     
     # Calculation mode selection
     calculation_mode = st.radio(
@@ -289,7 +390,7 @@ st.markdown('<div class="divider">━━━━━━━━━━━━━━━�
 
 # Conditional inputs based on calculation mode
 if calculation_mode == "Calculate Monthly Installment":
-    st.subheader("📅 Repayment Period")
+    st.subheader("Repayment Period")
     
     col_years, col_months = st.columns(2)
     
@@ -335,7 +436,7 @@ if calculation_mode == "Calculate Monthly Installment":
             """, unsafe_allow_html=True)
             
             # Additional information
-            with st.expander("📋 Calculation Details"):
+            with st.expander("Calculation Details"):
                 st.write(f"**Facility Amount:** {format_currency(facility_amount)}")
                 st.write(f"**Repayment Period:** {format_repayment_period(total_months)} ({total_months} months)")
                 st.write(f"**Annual Interest Rate:** {annual_interest_rate}%")
@@ -344,7 +445,7 @@ if calculation_mode == "Calculate Monthly Installment":
                 st.write(f"**Total Amount:** {format_currency(monthly_installment * total_months)}")
 
 else:  # Calculate Repayment Period
-    st.subheader("💰 Monthly Installment")
+    st.subheader("Monthly Installment")
     
     monthly_installment = st.number_input(
         "Monthly Installment Amount",
@@ -384,7 +485,7 @@ else:  # Calculate Repayment Period
                     """, unsafe_allow_html=True)
                     
                     # Additional information
-                    with st.expander("📋 Calculation Details"):
+                    with st.expander("Calculation Details"):
                         st.write(f"**Facility Amount:** {format_currency(facility_amount)}")
                         st.write(f"**Monthly Installment:** {format_currency(monthly_installment)}")
                         st.write(f"**Annual Interest Rate:** {annual_interest_rate}%")
@@ -396,8 +497,8 @@ else:  # Calculate Repayment Period
 # Footer
 st.markdown("---")
 st.markdown(
-    "<div style='text-align: center; color: #666; padding: 1rem;'>"
-    "Built with ❤️ using Streamlit | Vehicle Financing Installment Calculator"
+    "<div style='text-align: center; color: #9a9a9a; padding: 1.5rem; opacity: 0.7; font-weight: 300;'>"
+    "Built with Streamlit | Vehicle Financing Installment Calculator"
     "</div>",
     unsafe_allow_html=True
 )
